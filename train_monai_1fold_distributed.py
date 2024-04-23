@@ -134,8 +134,10 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, scaler):
         step += 1
         optimizer.zero_grad()
         with torch.cuda.amp.autocast():
-            outputs = model(batch_data["image"])
-            loss = criterion(outputs, batch_data["label"])
+            images = batch_data["image"].cuda()
+            labels = batch_data["label"].cuda()
+            outputs = model(images)
+            loss = criterion(outputs, labels)
         scaler.scale(loss).backward()
         scaler.step(optimizer)
         scaler.update()
@@ -171,13 +173,13 @@ def evaluate(model, val_loader, dice_metric, dice_metric_batch, post_trans):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--dir", default="./testdata", type=str, help="directory of Brain Tumor dataset")
-    parser.add_argument("--epochs", default=300, type=int, metavar="N", help="number of total epochs to run")
+    parser.add_argument("-d", "--dir", default="./dataset", type=str, help="directory of Brain Tumor dataset")
+    parser.add_argument("--epochs", default=50, type=int, metavar="N", help="number of total epochs to run")
     parser.add_argument("--lr", default=1e-4, type=float, help="learning rate")
     parser.add_argument("-b", "--batch_size", default=1, type=int, help="mini-batch size of every GPU")
     parser.add_argument("--seed", default=None, type=int, help="seed for initializing training.")
     parser.add_argument("--cache_rate", type=float, default=1.0, help="larger cache rate relies on enough GPU memory.")
-    parser.add_argument("--val_interval", type=int, default=20)
+    parser.add_argument("--val_interval", type=int, default=5)
     args = parser.parse_args()
 
     if args.seed is not None:
