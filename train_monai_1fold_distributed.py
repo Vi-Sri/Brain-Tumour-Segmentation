@@ -12,7 +12,7 @@ from monai.apps import DecathlonDataset
 from monai.data import ThreadDataLoader, partition_dataset, decollate_batch
 from monai.inferers import sliding_window_inference
 from monai.losses import DiceFocalLoss
-from monai.metrics import DiceMetric
+from monai.metrics import DiceMetric, HausdorffDistanceMetric
 from monai.networks.nets import SegResNet, UNet
 from monai.optimizers import Novograd
 from monai.transforms import (
@@ -88,6 +88,8 @@ def main_worker(args):
 
     dice_metric = DiceMetric(include_background=True, reduction="mean")
     dice_metric_batch = DiceMetric(include_background=True, reduction="mean_batch")
+    hausdorff_metric = HausdorffDistanceMetric(include_background=True, reduction="mean")
+    hausdorff_metric_batch = HausdorffDistanceMetric(include_background=True, reduction="mean_batch")
     post_trans = Compose([Activations(sigmoid=True), AsDiscrete(threshold=0.5)])
     best_metric = -1
     best_metric_epoch = -1
@@ -102,7 +104,8 @@ def main_worker(args):
 
         if (epoch + 1) % args.val_interval == 0:
             metric, metric_tc, metric_wt, metric_et = evaluate(
-                model, val_loader, dice_metric, dice_metric_batch, post_trans
+                model, val_loader, dice_metric, dice_metric_batch, hausdorff_metric, 
+                hausdorff_metric_batch, post_trans
             )
 
             if metric > best_metric:
@@ -149,7 +152,7 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, scaler):
 
     return epoch_loss
 
-def evaluate(model, val_loader, dice_metric, dice_metric_batch, post_trans):
+def evaluate(model, val_loader, dice_metric, dice_metric_batch, hausdorff_metric, hausdorff_metric_batch, post_trans):
     model.eval()
     with torch.no_grad():
         for val_data in val_loader:
@@ -160,14 +163,33 @@ def evaluate(model, val_loader, dice_metric, dice_metric_batch, post_trans):
             val_outputs = [post_trans(i) for i in decollate_batch(val_outputs)]
             dice_metric(y_pred=val_outputs, y=val_data["label"])
             dice_metric_batch(y_pred=val_outputs, y=val_data["label"])
+            hausdorff_metric(y_pred=val_outputs, y=val_data["label"])
+            hausdorff_metric_batch(y_pred=val_outputs, y=val_data["label"])
 
         metric = dice_metric.aggregate().item()
         metric_batch = dice_metric_batch.aggregate()
+        hausdorff_metric = hausdorff_metric.aggregate().item()
+        hausdorff_metric_batch = hausdorff_metric_batch.aggregate()
         metric_tc = metric_batch[0].item()
         metric_wt = metric_batch[1].item()
         metric_et = metric_batch[2].item()
+        hausdorff_metric_tc = hausdorff_metric_batch[0].item()
+        hausdorff_metric_wt = hausdorff_metric_batch[1].item()
+        hausdorff_metric_et = hausdorff_metric_batch[2].item()
+        print("########################################")
+        print(f"evaluation metric TC : {metric_tc:.4f}")
+        print(f"evaluation metric WT : {metric_wt:.4f}")
+        print(f"evaluation metric ET : {metric_et:.4f}")
+        print(f"evaluation metric mean : {metric:.4f}")
+        print(f"evaluation hausdorff distance TC : {hausdorff_metric_tc:.4f}")
+        print(f"evaluation hausdorff distance WT : {hausdorff_metric_wt:.4f}")
+        print(f"evaluation hausdorff distance ET : {hausdorff_metric_et:.4f}")
+        print(f"evaluation hausdorff distance mean : {hausdorff_metric:.4f}")
+        print("########################################")
         dice_metric.reset()
         dice_metric_batch.reset()
+        hausdorff_metric.reset()
+        hausdorff_metric_batch.reset()
 
     return metric, metric_tc, metric_wt, metric_et
 
