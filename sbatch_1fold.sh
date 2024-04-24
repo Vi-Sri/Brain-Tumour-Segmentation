@@ -5,7 +5,7 @@
 #SBATCH --gres=gpu:2
 #SBATCH --cpus-per-gpu=6
 #SBATCH --mem-per-cpu=8G
-#SBATCH -C gmem32
+#SBATCH -C gmem16
 #SBATCH --job-name=mic-2
 #SBATCH --output=outputs/mic-2.out
 #SBATCH --gres-flags=enforce-binding
@@ -24,7 +24,7 @@ conda activate mic2
 
 torchrun --nproc_per_node=2 --nnodes=1 train_monai_1fold_distributed.py \
             -d ./dataset \
-            --epochs 100 \
-            --batch_size 16 \
-            --cache_rate 0.5 \
-            --val_interval 5
+            --epochs 50 \
+            --batch_size 4 \
+            --cache_rate 0.1 \
+            --val_interval 1

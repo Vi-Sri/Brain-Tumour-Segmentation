@@ -7,6 +7,9 @@ import warnings
 import torch
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel
+import torch.utils
+from torch.utils.data.distributed import DistributedSampler
+from torch.utils.data import DataLoader
 
 from monai.apps import DecathlonDataset
 from monai.data import ThreadDataLoader, partition_dataset, decollate_batch
@@ -23,6 +26,7 @@ from monai.transforms import (
 import sys
 sys.path.append('.')
 from monai.utils import set_determinism
+from tqdm import tqdm
 from brat_tools import *
 
 
@@ -45,24 +49,47 @@ def main_worker(args):
     total_start = time.time()
     train_transforms = get_transforms(mode="train")
 
-    train_ds = BratsCacheDataset(
+    # train_ds = BratsCacheDataset(
+    #     root_dir=args.dir,
+    #     transform=train_transforms,
+    #     section="training",
+    #     num_workers=1,
+    #     cache_rate=args.cache_rate,
+    #     shuffle=True,
+    # )
+
+    train_ds = DecathlonDataset(
         root_dir=args.dir,
+        task="Task01_BrainTumour",
         transform=train_transforms,
         section="training",
-        num_workers=4,
         cache_rate=args.cache_rate,
-        shuffle=True,
+        num_workers=1,
     )
-    train_loader = ThreadDataLoader(train_ds, num_workers=0, batch_size=args.batch_size, shuffle=True)
+    train_sampler = DistributedSampler(train_ds, shuffle=True)
+    train_loader = DataLoader(train_ds, batch_size=args.batch_size, sampler=train_sampler, num_workers=0, pin_memory=True)
+    # train_loader = ThreadDataLoader(train_ds, num_workers=0, batch_size=args.batch_size, shuffle=True)
+
     val_transforms = get_transforms(mode="val")
     val_ds = BratsCacheDataset(
         root_dir=args.dir,
         transform=val_transforms,
         section="validation",
-        num_workers=4,
+        num_workers=1,
         cache_rate=args.cache_rate,
         shuffle=False,
     )
+    val_ds = torch.utils.data.Subset(val_ds, range(0, 16))
+    # val_ds = DecathlonDataset(
+    #     root_dir=args.dir,
+    #     task="Task01_BrainTumour",
+    #     transform=val_transforms,
+    #     section="validation",
+    #     cache_rate=args.cache_rate,
+    #     num_workers=1,
+    # )
+    # val_sampler = DistributedSampler(val_ds, shuffle=False)
+    # val_loader = DataLoader(val_ds, batch_size=args.batch_size, sampler=val_sampler, num_workers=0, pin_memory=True)
     val_loader = ThreadDataLoader(val_ds, num_workers=0, batch_size=args.batch_size, shuffle=False)
 
     model = UNet(
@@ -72,8 +99,7 @@ def main_worker(args):
         channels=(16, 32, 64, 128, 256),
         strides=(2, 2, 2, 2),
         num_res_units=2,
-    ).to(device)
-
+    )
     loss_function = DiceFocalLoss(
         smooth_nr=1e-5,
         smooth_dr=1e-5,
@@ -82,10 +108,11 @@ def main_worker(args):
         sigmoid=True,
         batch=True,
     )
+    model = model.to(device)
+    loss_function = loss_function.to(device)
     optimizer = Novograd(model.parameters(), lr=args.lr)
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     model = DistributedDataParallel(model, device_ids=[device])
-
     dice_metric = DiceMetric(include_background=True, reduction="mean")
     dice_metric_batch = DiceMetric(include_background=True, reduction="mean_batch")
     hausdorff_metric = HausdorffDistanceMetric(include_background=True, reduction="mean")
@@ -99,15 +126,14 @@ def main_worker(args):
         epoch_start = time.time()
         print("-" * 10)
         print(f"epoch {epoch + 1}/{args.epochs}")
-        epoch_loss = train(train_loader, model, loss_function, optimizer, lr_scheduler, scaler)
+        epoch_loss = train(train_loader, model, loss_function, optimizer, lr_scheduler, scaler, device)
         print(f"epoch {epoch + 1} average loss: {epoch_loss:.4f}")
 
         if (epoch + 1) % args.val_interval == 0:
             metric, metric_tc, metric_wt, metric_et = evaluate(
                 model, val_loader, dice_metric, dice_metric_batch, hausdorff_metric, 
-                hausdorff_metric_batch, post_trans
+                hausdorff_metric_batch, post_trans, device
             )
-
             if metric > best_metric:
                 best_metric = metric
                 best_metric_epoch = epoch + 1
@@ -118,7 +144,6 @@ def main_worker(args):
                 f" tc: {metric_tc:.4f} wt: {metric_wt:.4f} et: {metric_et:.4f}"
                 f"\nbest mean dice: {best_metric:.4f} at epoch: {best_metric_epoch}"
             )
-
         print(f"time consuming of epoch {epoch + 1} is: {(time.time() - epoch_start):.4f}")
 
     print(
@@ -127,7 +152,7 @@ def main_worker(args):
     )
     dist.destroy_process_group()
 
-def train(train_loader, model, criterion, optimizer, lr_scheduler, scaler):
+def train(train_loader, model, criterion, optimizer, lr_scheduler, scaler, device):
     model.train()
     step = 0
     epoch_len = len(train_loader)
@@ -137,8 +162,8 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, scaler):
         step += 1
         optimizer.zero_grad()
         with torch.cuda.amp.autocast():
-            images = batch_data["image"].cuda()
-            labels = batch_data["label"].cuda()
+            images = batch_data["image"].to(device)
+            labels = batch_data["label"].to(device)
             outputs = model(images)
             loss = criterion(outputs, labels)
         scaler.scale(loss).backward()
@@ -152,30 +177,32 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, scaler):
 
     return epoch_loss
 
-def evaluate(model, val_loader, dice_metric, dice_metric_batch, hausdorff_metric, hausdorff_metric_batch, post_trans):
+def evaluate(model, val_loader, dice_metric, dice_metric_batch, hausdorff_metric, hausdorff_metric_batch, post_trans, device):
     model.eval()
     with torch.no_grad():
-        for val_data in val_loader:
+        for val_data in tqdm(val_loader):
             with torch.cuda.amp.autocast():
+                val_images = val_data["image"].to(device)
+                val_labels = val_data["label"].to(device)
                 val_outputs = sliding_window_inference(
-                    inputs=val_data["image"], roi_size=(240, 240, 160), sw_batch_size=4, predictor=model, overlap=0.6
+                    inputs=val_images, roi_size=(240, 240, 160), sw_batch_size=4, predictor=model, overlap=0.6
                 )
             val_outputs = [post_trans(i) for i in decollate_batch(val_outputs)]
-            dice_metric(y_pred=val_outputs, y=val_data["label"])
-            dice_metric_batch(y_pred=val_outputs, y=val_data["label"])
-            hausdorff_metric(y_pred=val_outputs, y=val_data["label"])
-            hausdorff_metric_batch(y_pred=val_outputs, y=val_data["label"])
+            dice_metric(y_pred=val_outputs, y=val_labels)
+            dice_metric_batch(y_pred=val_outputs, y=val_labels)
+            hausdorff_metric(y_pred=val_outputs, y=val_labels)
+            hausdorff_metric_batch(y_pred=val_outputs, y=val_labels)
 
         metric = dice_metric.aggregate().item()
         metric_batch = dice_metric_batch.aggregate()
-        hausdorff_metric = hausdorff_metric.aggregate().item()
-        hausdorff_metric_batch = hausdorff_metric_batch.aggregate()
+        hd_metric = hausdorff_metric.aggregate().item()
+        hd_metric_batch = hausdorff_metric_batch.aggregate()
         metric_tc = metric_batch[0].item()
         metric_wt = metric_batch[1].item()
         metric_et = metric_batch[2].item()
-        hausdorff_metric_tc = hausdorff_metric_batch[0].item()
-        hausdorff_metric_wt = hausdorff_metric_batch[1].item()
-        hausdorff_metric_et = hausdorff_metric_batch[2].item()
+        hausdorff_metric_tc = hd_metric_batch[0].item()
+        hausdorff_metric_wt = hd_metric_batch[1].item()
+        hausdorff_metric_et = hd_metric_batch[2].item()
         print("########################################")
         print(f"evaluation metric TC : {metric_tc:.4f}")
         print(f"evaluation metric WT : {metric_wt:.4f}")
@@ -184,7 +211,7 @@ def evaluate(model, val_loader, dice_metric, dice_metric_batch, hausdorff_metric
         print(f"evaluation hausdorff distance TC : {hausdorff_metric_tc:.4f}")
         print(f"evaluation hausdorff distance WT : {hausdorff_metric_wt:.4f}")
         print(f"evaluation hausdorff distance ET : {hausdorff_metric_et:.4f}")
-        print(f"evaluation hausdorff distance mean : {hausdorff_metric:.4f}")
+        print(f"evaluation hausdorff distance mean : {hd_metric:.4f}")
         print("########################################")
         dice_metric.reset()
         dice_metric_batch.reset()

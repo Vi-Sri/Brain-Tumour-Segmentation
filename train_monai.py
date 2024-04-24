@@ -115,15 +115,52 @@ for fold, (train_ids, val_ids) in enumerate(KFold.split(full_dataset)):
         channels=(16, 32, 64, 128, 256),
         strides=(2, 2, 2, 2),
         num_res_units=2,
-    ).to(device)
+    ).cuda()
 
     loss_function = DiceLoss(to_onehot_y=True, softmax=True)
     optimizer = torch.optim.Adam(model.parameters(), 1e-4)
-
     dice_metric = DiceMetric(include_background=False, reduction="mean")
     hausdorff_metric = HausdorffDistanceMetric(include_background=False)
-
     max_epochs = 30
+    for epoch in range(max_epochs):
+        print(f"Epoch {epoch+1}/{max_epochs}")
+        model.train()
+        epoch_loss = 0.0
+        dice_metric.reset()
+        hausdorff_metric.reset()
+
+        for batch_data in train_loader:
+            inputs, labels = batch_data["image"].to(device), batch_data["label"].to(device)
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = loss_function(outputs, labels)
+            loss.backward()
+            optimizer.step()
+            epoch_loss += loss.item()
+
+            # compute metrics
+            dice_metric(y_pred=outputs, y=labels)
+            hausdorff_metric(y_pred=outputs, y=labels)
+
+        # compute metrics on validation set
+        model.eval()
+        val_dice = 0.0
+        val_hausdorff = 0.0
+        with torch.no_grad():
+            for val_data in val_loader:
+                val_inputs, val_labels = val_data["image"].to(device), val_data["label"].to(device)
+                val_outputs = model(val_inputs)
+                val_dice += dice_metric(y_pred=val_outputs, y=val_labels).item()
+                val_hausdorff += hausdorff_metric(y_pred=val_outputs, y=val_labels).item()
+
+        # calculate average metrics
+        epoch_loss /= len(train_loader)
+        val_dice /= len(val_loader)
+        val_hausdorff /= len(val_loader)
+
+        print(f"Train Loss: {epoch_loss:.4f} | Val Dice: {val_dice:.4f} | Val Hausdorff: {val_hausdorff:.4f}")
+
+    print("Training complete.")
 
 
 
