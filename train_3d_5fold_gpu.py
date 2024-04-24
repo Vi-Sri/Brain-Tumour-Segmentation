@@ -127,7 +127,9 @@ for fold, (train_ids, val_ids) in enumerate(kfold.split(full_dataset)):
     ).cuda()
     optimizer = torch.optim.Adam(model.parameters(), 1e-4)
     dice_metric = DiceMetric(include_background=False, reduction="mean")
-    hausdorff_metric = HausdorffDistanceMetric(include_background=False)
+    hausdorff_metric = HausdorffDistanceMetric(include_background=False, reduction="mean")
+    val_dice_metric = DiceMetric(include_background=False, reduction="mean")
+    val_hausdorff_metric = HausdorffDistanceMetric(include_background=False, reduction="mean")
     max_epochs = 5
     for epoch in range(max_epochs):
         print(f"Epoch {epoch+1}/{max_epochs}")
@@ -135,6 +137,8 @@ for fold, (train_ids, val_ids) in enumerate(kfold.split(full_dataset)):
         epoch_loss = 0.0
         dice_metric.reset()
         hausdorff_metric.reset()
+        val_dice_metric.reset()
+        val_hausdorff_metric.reset()
 
         for batch_data in tqdm(train_loader):
             inputs, labels = batch_data["image"].to(device), batch_data["label"].to(device)
@@ -154,28 +158,14 @@ for fold, (train_ids, val_ids) in enumerate(kfold.split(full_dataset)):
 
         # compute metrics on validation set
         model.eval()
-        val_dice = 0.0
-        val_hausdorff = 0.0
         with torch.no_grad():
             for val_data in val_loader:
                 val_inputs, val_labels = val_data["image"].to(device), val_data["label"].to(device)
                 val_outputs = model(val_inputs)
-                val_dice = dice_metric(y_pred=val_outputs, y=val_labels)
-                if val_dice.numel() == 1:
-                    val_dice += val_dice.item()
-                else:
-                    val_dice += val_dice.mean().item()
-                val_hausdorff = hausdorff_metric(y_pred=val_outputs, y=val_labels)
-                if val_hausdorff.numel() == 1:
-                    val_hausdorff += val_hausdorff.item()
-                else:
-                    val_hausdorff += val_hausdorff.mean().item()
+                val_dice_metric(y_pred=val_outputs, y=val_labels)
+                val_hausdorff_metric(y_pred=val_outputs, y=val_labels)
 
-        # calculate average metrics
-        val_dice /= len(val_loader)
-        val_hausdorff /= len(val_loader)
-
-        print(f"Val Dice: {val_dice:.4f} | Val Hausdorff: {val_hausdorff:.4f}")
+        print(f"Val Dice: {val_dice_metric.aggregate().item():.4f} | Val Hausdorff: {val_hausdorff_metric.aggregate().item():.4f}")
 
     print("Training complete.")
 
