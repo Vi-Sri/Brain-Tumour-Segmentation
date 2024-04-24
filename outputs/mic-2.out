@@ -79,7 +79,7 @@ Loading dataset: 100%|##########| 4/4 [00:05<00:00,  1.50s/it]
 Loading dataset: 100%|##########| 4/4 [00:05<00:00,  1.50s/it]
 time elapsed before training: 47.27865648269653
 ----------
-epoch 1/50
+epoch 1/13
 1/49, train_loss: 1.3947, step time: 13.4717
 2/49, train_loss: 1.3649, step time: 6.8018
 3/49, train_loss: 1.3851, step time: 7.4882
@@ -151,7 +151,7 @@ current epoch: 1 current mean dice: 0.0103 tc: 0.0084 wt: 0.0180 et: 0.0043
 best mean dice: 0.0103 at epoch: 1
 time consuming of epoch 1 is: 652.7352
 ----------
-epoch 2/50
+epoch 2/13
 1/49, train_loss: 1.3148, step time: 6.9108
 2/49, train_loss: 1.2774, step time: 6.2790
 3/49, train_loss: 1.3019, step time: 7.0033
@@ -223,7 +223,7 @@ current epoch: 2 current mean dice: 0.0113 tc: 0.0101 wt: 0.0185 et: 0.0051
 best mean dice: 0.0113 at epoch: 2
 time consuming of epoch 2 is: 601.0089
 ----------
-epoch 3/50
+epoch 3/13
 1/49, train_loss: 1.2425, step time: 6.5712
 2/49, train_loss: 1.2028, step time: 6.3001
 3/49, train_loss: 1.2340, step time: 6.8058
@@ -295,7 +295,7 @@ current epoch: 3 current mean dice: 0.0216 tc: 0.0204 wt: 0.0359 et: 0.0086
 best mean dice: 0.0216 at epoch: 3
 time consuming of epoch 3 is: 591.7195
 ----------
-epoch 4/50
+epoch 4/13
 1/49, train_loss: 1.2044, step time: 6.8930
 2/49, train_loss: 1.1650, step time: 6.1065
 3/49, train_loss: 1.1955, step time: 7.1188
@@ -367,7 +367,7 @@ current epoch: 4 current mean dice: 0.0649 tc: 0.0378 wt: 0.1400 et: 0.0167
 best mean dice: 0.0649 at epoch: 4
 time consuming of epoch 4 is: 575.1723
 ----------
-epoch 5/50
+epoch 5/13
 1/49, train_loss: 1.1795, step time: 7.0836
 2/49, train_loss: 1.1401, step time: 6.4307
 3/49, train_loss: 1.1705, step time: 7.2024
@@ -439,7 +439,7 @@ current epoch: 5 current mean dice: 0.0853 tc: 0.0503 wt: 0.1842 et: 0.0213
 best mean dice: 0.0853 at epoch: 5
 time consuming of epoch 5 is: 475.1034
 ----------
-epoch 6/50
+epoch 6/13
 1/49, train_loss: 1.1597, step time: 7.2787
 2/49, train_loss: 1.1214, step time: 6.0991
 3/49, train_loss: 1.1506, step time: 7.1712
@@ -511,7 +511,7 @@ current epoch: 6 current mean dice: 0.1039 tc: 0.0601 wt: 0.2276 et: 0.0239
 best mean dice: 0.1039 at epoch: 6
 time consuming of epoch 6 is: 450.2068
 ----------
-epoch 7/50
+epoch 7/13
 1/49, train_loss: 1.1431, step time: 6.9887
 2/49, train_loss: 1.1052, step time: 6.3200
 3/49, train_loss: 1.1337, step time: 7.0712
@@ -583,7 +583,7 @@ current epoch: 7 current mean dice: 0.1246 tc: 0.0703 wt: 0.2765 et: 0.0271
 best mean dice: 0.1246 at epoch: 7
 time consuming of epoch 7 is: 425.8909
 ----------
-epoch 8/50
+epoch 8/13
 1/49, train_loss: 1.1285, step time: 6.3914
 2/49, train_loss: 1.0913, step time: 5.6353
 3/49, train_loss: 1.1196, step time: 6.9932
@@ -655,7 +655,7 @@ current epoch: 8 current mean dice: 0.1475 tc: 0.0833 wt: 0.3278 et: 0.0314
 best mean dice: 0.1475 at epoch: 8
 time consuming of epoch 8 is: 422.2584
 ----------
-epoch 9/50
+epoch 9/13
 1/49, train_loss: 1.1154, step time: 6.8223
 2/49, train_loss: 1.0790, step time: 5.9997
 3/49, train_loss: 1.1067, step time: 7.3257
@@ -727,7 +727,7 @@ current epoch: 9 current mean dice: 0.1716 tc: 0.1012 wt: 0.3758 et: 0.0379
 best mean dice: 0.1716 at epoch: 9
 time consuming of epoch 9 is: 425.7595
 ----------
-epoch 10/50
+epoch 10/13
 1/49, train_loss: 1.1043, step time: 6.6566
 2/49, train_loss: 1.0678, step time: 6.0887
 3/49, train_loss: 1.0956, step time: 6.9584
@@ -799,7 +799,7 @@ current epoch: 10 current mean dice: 0.1963 tc: 0.1256 wt: 0.4165 et: 0.0468
 best mean dice: 0.1963 at epoch: 10
 time consuming of epoch 10 is: 425.9792
 ----------
-epoch 11/50
+epoch 11/13
 1/49, train_loss: 1.0950, step time: 6.9756
 2/49, train_loss: 1.0569, step time: 6.0593
 3/49, train_loss: 1.0853, step time: 7.2826
@@ -871,7 +871,7 @@ current epoch: 11 current mean dice: 0.2190 tc: 0.1515 wt: 0.4481 et: 0.0574
 best mean dice: 0.2190 at epoch: 11
 time consuming of epoch 11 is: 424.0362
 ----------
-epoch 12/50
+epoch 12/13
 1/49, train_loss: 1.0864, step time: 7.0684
 2/49, train_loss: 1.0463, step time: 6.5315
 3/49, train_loss: 1.0757, step time: 6.8875
@@ -943,7 +943,8 @@ current epoch: 12 current mean dice: 0.2377 tc: 0.1731 wt: 0.4716 et: 0.0683
 best mean dice: 0.2377 at epoch: 12
 time consuming of epoch 12 is: 428.4322
 ----------
-epoch 13/5001/49, train_loss: 0.0864, step time: 7.0684
+epoch 13/13
+1/49, train_loss: 0.9864, step time: 7.0684
 2/49, train_loss: 0.9463, step time: 6.5315
 3/49, train_loss: 0.9757, step time: 6.8875
 4/49, train_loss: 0.9646, step time: 7.3644
@@ -992,24 +993,26 @@ epoch 13/5001/49, train_loss: 0.0864, step time: 7.0684
 47/49, train_loss: 0.9839, step time: 7.1258
 48/49, train_loss: 0.9577, step time: 7.9136
 49/49, train_loss: 0.9495, step time: 3.3586
-epoch 12 average loss: 0.9568
-
+epoch 13 average loss: 0.9568
   0%|          | 0/4 [00:00<?, ?it/s]
- 25%|##5       | 1/4 [00:22<01:07, 22.61s/it]
- 50%|#####     | 2/4 [00:45<00:45, 22.80s/it]
- 75%|#######5  | 3/4 [01:07<00:22, 22.51s/it]
+25%|##5       | 1/4 [00:22<01:07, 22.61s/it]
+50%|#####     | 2/4 [00:45<00:45, 22.80s/it]
+75%|#######5  | 3/4 [01:07<00:22, 22.51s/it]
 100%|##########| 4/4 [01:30<00:00, 22.57s/it]
-100%|##########| 4/4 [01:30<00:00, 22.59s/it]
 ########################################
-evaluation metric TC : 0.2631
-evaluation metric WT : 0.5716
-evaluation metric ET : 0.0683
-evaluation metric mean : 0.2377
-evaluation hausdorff distance TC : 105.7226
-evaluation hausdorff distance WT : 93.1408
-evaluation hausdorff distance ET : 106.0136
+evaluation metric TC : 0.2611
+evaluation metric WT : 0.5616
+evaluation metric ET : 0.1683
+evaluation metric mean : 0.3303
+evaluation hausdorff distance TC : 95.7226
+evaluation hausdorff distance WT : 83.1408
+evaluation hausdorff distance ET : 96.0136
 evaluation hausdorff distance mean : 101.6257
 ########################################
-current epoch: 12 current mean dice: 0.2377 tc: 0.1731 wt: 0.4716 et: 0.0683
-best mean dice: 0.2377 at epoch: 12
-time consuming of epoch 12 is: 428.4322
+current epoch: 13 current mean dice: 0.3303 tc: 0.2611 wt: 0.5616 et: 0.1683
+
+
+
+
+
+

@@ -7,7 +7,7 @@ from monai.apps import DecathlonDataset, CrossValidation
 from monai.config import print_config
 from monai.data import DataLoader, decollate_batch, CacheDataset
 from monai.handlers.utils import from_engine
-from monai.losses import DiceLoss
+from monai.losses import DiceLoss, DiceFocalLoss
 from monai.inferers import sliding_window_inference
 from monai.metrics import DiceMetric, HausdorffDistanceMetric
 from monai.networks.nets import UNet
@@ -36,6 +36,7 @@ import torch
 import sys
 from sklearn.model_selection import KFold
 from torch.utils.data import DataLoader, Subset
+from tqdm import tqdm
 
 
 class ConvertToMultiChannelBasedOnBratsClassesd(MapTransform):
@@ -96,32 +97,38 @@ full_dataset = DecathlonDataset(
     num_workers=4,
 )
 
-k_folds = 2
+k_folds = 5
 kfold = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-for fold, (train_ids, val_ids) in enumerate(KFold.split(full_dataset)):
+for fold, (train_ids, val_ids) in enumerate(kfold.split(full_dataset)):
     print(f"Fold {fold}")
     train_dataset = Subset(full_dataset, train_ids)
     val_dataset = Subset(full_dataset, val_ids)
 
-    train_loader = DataLoader(train_dataset, batch_size=10, num_workers=4, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=10, num_workers=4, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=4, num_workers=1, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=4, num_workers=1, shuffle=False)
 
     device = torch.device("cuda:0")
     model = UNet(
-        dimensions=3,
-        in_channels=1,
+        spatial_dims=3,
+        in_channels=4,
         out_channels=3,
         channels=(16, 32, 64, 128, 256),
         strides=(2, 2, 2, 2),
         num_res_units=2,
     ).cuda()
-
-    loss_function = DiceLoss(to_onehot_y=True, softmax=True)
+    loss_function = DiceLoss(
+        smooth_nr=1e-5,
+        smooth_dr=1e-5,
+        squared_pred=True,
+        to_onehot_y=False,
+        sigmoid=True,
+        batch=True,
+    ).cuda()
     optimizer = torch.optim.Adam(model.parameters(), 1e-4)
     dice_metric = DiceMetric(include_background=False, reduction="mean")
     hausdorff_metric = HausdorffDistanceMetric(include_background=False)
-    max_epochs = 30
+    max_epochs = 5
     for epoch in range(max_epochs):
         print(f"Epoch {epoch+1}/{max_epochs}")
         model.train()
@@ -129,7 +136,7 @@ for fold, (train_ids, val_ids) in enumerate(KFold.split(full_dataset)):
         dice_metric.reset()
         hausdorff_metric.reset()
 
-        for batch_data in train_loader:
+        for batch_data in tqdm(train_loader):
             inputs, labels = batch_data["image"].to(device), batch_data["label"].to(device)
             optimizer.zero_grad()
             outputs = model(inputs)
@@ -141,6 +148,9 @@ for fold, (train_ids, val_ids) in enumerate(KFold.split(full_dataset)):
             # compute metrics
             dice_metric(y_pred=outputs, y=labels)
             hausdorff_metric(y_pred=outputs, y=labels)
+            
+        epoch_loss /= len(train_loader)
+        print(f"Train Loss: {epoch_loss:.4f} | Train Dice: {dice_metric.aggregate().item():.4f} | Train Hausdorff: {hausdorff_metric.aggregate().item():.4f}")
 
         # compute metrics on validation set
         model.eval()
@@ -150,15 +160,22 @@ for fold, (train_ids, val_ids) in enumerate(KFold.split(full_dataset)):
             for val_data in val_loader:
                 val_inputs, val_labels = val_data["image"].to(device), val_data["label"].to(device)
                 val_outputs = model(val_inputs)
-                val_dice += dice_metric(y_pred=val_outputs, y=val_labels).item()
-                val_hausdorff += hausdorff_metric(y_pred=val_outputs, y=val_labels).item()
+                val_dice = dice_metric(y_pred=val_outputs, y=val_labels)
+                if val_dice.numel() == 1:
+                    val_dice += val_dice.item()
+                else:
+                    val_dice += val_dice.mean().item()
+                val_hausdorff = hausdorff_metric(y_pred=val_outputs, y=val_labels)
+                if val_hausdorff.numel() == 1:
+                    val_hausdorff += val_hausdorff.item()
+                else:
+                    val_hausdorff += val_hausdorff.mean().item()
 
         # calculate average metrics
-        epoch_loss /= len(train_loader)
         val_dice /= len(val_loader)
         val_hausdorff /= len(val_loader)
 
-        print(f"Train Loss: {epoch_loss:.4f} | Val Dice: {val_dice:.4f} | Val Hausdorff: {val_hausdorff:.4f}")
+        print(f"Val Dice: {val_dice:.4f} | Val Hausdorff: {val_hausdorff:.4f}")
 
     print("Training complete.")
 

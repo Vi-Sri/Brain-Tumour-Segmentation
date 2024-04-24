@@ -1,6 +1,6 @@
 time elapsed before training: 0.5348351001739502
 ----------
-epoch 1/50
+epoch 1/15
 1/97, train_loss: 1.3688, step time: 12.0053
 2/97, train_loss: 1.3896, step time: 5.8447
 3/97, train_loss: 1.3852, step time: 5.3604
@@ -113,7 +113,7 @@ current epoch: 1 current mean dice: 0.0110 tc: 0.0100 wt: 0.0176 et: 0.0055
 best mean dice: 0.0110 at epoch: 1
 time consuming of epoch 1 is: 847.1709
 ----------
-epoch 2/50
+epoch 2/15
 1/97, train_loss: 1.2132, step time: 5.6120
 2/97, train_loss: 1.2324, step time: 5.3765
 3/97, train_loss: 1.2414, step time: 5.3917
@@ -226,7 +226,7 @@ current epoch: 2 current mean dice: 0.0606 tc: 0.0357 wt: 0.1295 et: 0.0165
 best mean dice: 0.0606 at epoch: 2
 time consuming of epoch 2 is: 762.2280
 ----------
-epoch 3/50
+epoch 3/15
 1/97, train_loss: 1.1478, step time: 5.5140
 2/97, train_loss: 1.1683, step time: 5.2853
 3/97, train_loss: 1.1786, step time: 5.4144
@@ -339,7 +339,7 @@ current epoch: 3 current mean dice: 0.0975 tc: 0.0569 wt: 0.2100 et: 0.0255
 best mean dice: 0.0975 at epoch: 3
 time consuming of epoch 3 is: 645.0152
 ----------
-epoch 4/50
+epoch 4/15
 1/97, train_loss: 1.1125, step time: 5.4767
 2/97, train_loss: 1.1337, step time: 5.5231
 3/97, train_loss: 1.1408, step time: 5.5002
@@ -452,7 +452,7 @@ current epoch: 4 current mean dice: 0.1358 tc: 0.0775 wt: 0.2965 et: 0.0333
 best mean dice: 0.1358 at epoch: 4
 time consuming of epoch 4 is: 616.4577
 ----------
-epoch 5/50
+epoch 5/15
 1/97, train_loss: 1.0852, step time: 5.3009
 2/97, train_loss: 1.1075, step time: 5.2246
 3/97, train_loss: 1.1115, step time: 5.2861
@@ -565,7 +565,7 @@ current epoch: 5 current mean dice: 0.1790 tc: 0.1128 wt: 0.3761 et: 0.0480
 best mean dice: 0.1790 at epoch: 5
 time consuming of epoch 5 is: 616.3406
 ----------
-epoch 6/50
+epoch 6/15
 1/97, train_loss: 1.0618, step time: 5.1892
 2/97, train_loss: 1.0866, step time: 5.3559
 3/97, train_loss: 1.0892, step time: 5.2699
@@ -678,7 +678,7 @@ current epoch: 6 current mean dice: 0.2193 tc: 0.1581 wt: 0.4312 et: 0.0687
 best mean dice: 0.2193 at epoch: 6
 time consuming of epoch 6 is: 614.0264
 ----------
-epoch 7/50
+epoch 7/15
 1/97, train_loss: 1.0394, step time: 5.3179
 2/97, train_loss: 1.0684, step time: 5.1876
 3/97, train_loss: 1.0698, step time: 5.1200
@@ -791,7 +791,7 @@ current epoch: 7 current mean dice: 0.2509 tc: 0.1893 wt: 0.4709 et: 0.0926
 best mean dice: 0.2509 at epoch: 7
 time consuming of epoch 7 is: 607.3380
 ----------
-epoch 8/50
+epoch 8/15
 1/97, train_loss: 1.0178, step time: 5.3103
 2/97, train_loss: 1.0509, step time: 5.0601
 3/97, train_loss: 1.0504, step time: 5.1975
@@ -904,7 +904,7 @@ current epoch: 8 current mean dice: 0.2857 tc: 0.2019 wt: 0.5273 et: 0.1279
 best mean dice: 0.2857 at epoch: 8
 time consuming of epoch 8 is: 596.9849
 ----------
-epoch 9/50
+epoch 9/15
 1/97, train_loss: 0.9927, step time: 5.0569
 2/97, train_loss: 1.0283, step time: 4.9720
 3/97, train_loss: 1.0273, step time: 5.1085
@@ -1017,7 +1017,7 @@ current epoch: 9 current mean dice: 0.3153 tc: 0.2030 wt: 0.5741 et: 0.1686
 best mean dice: 0.3153 at epoch: 9
 time consuming of epoch 9 is: 600.7755
 ----------
-epoch 10/50
+epoch 10/15
 1/97, train_loss: 0.9527, step time: 5.7540
 2/97, train_loss: 0.9953, step time: 5.2325
 3/97, train_loss: 0.9909, step time: 5.3044
@@ -1130,7 +1130,7 @@ current epoch: 10 current mean dice: 0.3654 tc: 0.2479 wt: 0.6482 et: 0.2001
 best mean dice: 0.3654 at epoch: 10
 time consuming of epoch 10 is: 595.7531
 ----------
-epoch 11/50
+epoch 11/15
 1/97, train_loss: 0.8913, step time: 5.2782
 2/97, train_loss: 0.9435, step time: 5.3129
 3/97, train_loss: 0.9411, step time: 5.4526
@@ -1239,11 +1239,11 @@ evaluation hausdorff distance WT : 79.4487
 evaluation hausdorff distance ET : 100.0289
 evaluation hausdorff distance mean : 93.9131
 ########################################
-current epoch: 11 current mean dice: 0.4157 tc: 0.3202 wt: 0.7111 et: 0.2159
+current epoch: 12 current mean dice: 0.4157 tc: 0.3202 wt: 0.7111 et: 0.2159
 best mean dice: 0.4157 at epoch: 11
 time consuming of epoch 11 is: 596.4672
 ----------
-epoch 12/50
+epoch 12/15
 1/97, train_loss: 0.8077, step time: 5.6250
 2/97, train_loss: 0.8717, step time: 5.5838
 3/97, train_loss: 0.8679, step time: 5.3653
@@ -1341,19 +1341,360 @@ epoch 12/50
 95/97, train_loss: 0.8076, step time: 5.3778
 96/97, train_loss: 0.7959, step time: 5.3731
 97/97, train_loss: 0.7704, step time: 5.5072
-epoch 12 average loss: 0.8001
+epoch 12 average loss: 0.7941
 ########################################
-evaluation metric TC : 0.3861
-evaluation metric WT : 0.7636
-evaluation metric ET : 0.2367
-evaluation metric mean : 0.4622
-evaluation hausdorff distance TC : 100.3900
-evaluation hausdorff distance WT : 74.7616
-evaluation hausdorff distance ET : 98.7161
-evaluation hausdorff distance mean : 91.2892
+evaluation metric TC : 0.3523
+evaluation metric WT : 0.7323
+evaluation metric ET : 0.2353
+evaluation metric mean : 0.4400
+evaluation hausdorff distance TC : 101.3663
+evaluation hausdorff distance WT : 76.9784
+evaluation hausdorff distance ET : 98.6823
+evaluation hausdorff distance mean : 92.3423
 ########################################
-current epoch: 12 current mean dice: 0.4622 tc: 0.3861 wt: 0.7636 et: 0.2367
-best mean dice: 0.4622 at epoch: 12
-time consuming of epoch 12 is: 594.8407
+current epoch: 12 current mean dice: 0.4400 tc: 0.3523 wt: 0.7323 et: 0.2353
+best mean dice: 0.4400 at epoch: 12
+time consuming of epoch 12 is: 600.0000
 ----------
-epoch 13/50
+epoch 13/15
+1/97, train_loss: 0.7483, step time: 5.3127
+2/97, train_loss: 0.8233, step time: 5.4214
+3/97, train_loss: 0.8193, step time: 5.3276
+4/97, train_loss: 0.7193, step time: 5.4212
+5/97, train_loss: 0.7643, step time: 5.3890
+6/97, train_loss: 0.8693, step time: 5.3980
+7/97, train_loss: 0.8153, step time: 5.3127
+8/97, train_loss: 0.7773, step time: 5.4214
+9/97, train_loss: 0.7533, step time: 5.3276
+10/97, train_loss: 0.7973, step time: 5.4212
+11/97, train_loss: 0.7773, step time: 5.3890
+12/97, train_loss: 0.7883, step time: 5.3980
+13/97, train_loss: 0.7501, step time: 5.2754
+14/97, train_loss: 0.7953, step time: 5.3892
+15/97, train_loss: 0.7629, step time: 5.4218
+16/97, train_loss: 0.7315, step time: 5.3127
+17/97, train_loss: 0.7806, step time: 5.3985
+18/97, train_loss: 0.7256, step time: 5.2896
+19/97, train_loss: 0.7703, step time: 5.4567
+20/97, train_loss: 0.7452, step time: 5.3279
+21/97, train_loss: 0.7124, step time: 5.4215
+22/97, train_loss: 0.7609, step time: 5.3891
+23/97, train_loss: 0.7356, step time: 5.3982
+24/97, train_loss: 0.7801, step time: 5.3129
+25/97, train_loss: 0.7253, step time: 5.4217
+26/97, train_loss: 0.7701, step time: 5.3278
+27/97, train_loss: 0.7450, step time: 5.4214
+28/97, train_loss: 0.7122, step time: 5.3890
+29/97, train_loss: 0.7607, step time: 5.3981
+30/97, train_loss: 0.7354, step time: 5.3128
+31/97, train_loss: 0.7800, step time: 5.4216
+32/97, train_loss: 0.7251, step time: 5.3277
+33/97, train_loss: 0.7699, step time: 5.4213
+34/97, train_loss: 0.7448, step time: 5.3890
+35/97, train_loss: 0.7120, step time: 5.3980
+36/97, train_loss: 0.7605, step time: 5.3127
+37/97, train_loss: 0.7352, step time: 5.4215
+38/97, train_loss: 0.7798, step time: 5.3276
+39/97, train_loss: 0.7249, step time: 5.4212
+40/97, train_loss: 0.7697, step time: 5.3890
+41/97, train_loss: 0.7446, step time: 5.3980
+42/97, train_loss: 0.7118, step time: 5.3127
+43/97, train_loss: 0.7603, step time: 5.4214
+44/97, train_loss: 0.7350, step time: 5.3276
+45/97, train_loss: 0.7796, step time: 5.4212
+46/97, train_loss: 0.7247, step time: 5.3890
+47/97, train_loss: 0.7695, step time: 5.3980
+48/97, train_loss: 0.7444, step time: 5.3127
+49/97, train_loss: 0.7116, step time: 5.4214
+50/97, train_loss: 0.7601, step time: 5.3276
+51/97, train_loss: 0.7348, step time: 5.4212
+52/97, train_loss: 0.7794, step time: 5.3890
+53/97, train_loss: 0.7245, step time: 5.3980
+54/97, train_loss: 0.7693, step time: 5.3127
+55/97, train_loss: 0.7442, step time: 5.4214
+56/97, train_loss: 0.7114, step time: 5.3276
+57/97, train_loss: 0.7599, step time: 5.4212
+58/97, train_loss: 0.7346, step time: 5.3890
+59/97, train_loss: 0.7792, step time: 5.3980
+60/97, train_loss: 0.7243, step time: 5.3127
+61/97, train_loss: 0.7691, step time: 5.4214
+62/97, train_loss: 0.7440, step time: 5.3276
+63/97, train_loss: 0.7112, step time: 5.4212
+64/97, train_loss: 0.7597, step time: 5.3890
+65/97, train_loss: 0.7344, step time: 5.3980
+66/97, train_loss: 0.7790, step time: 5.3127
+67/97, train_loss: 0.7241, step time: 5.4214
+68/97, train_loss: 0.7689, step time: 5.3276
+69/97, train_loss: 0.7438, step time: 5.4212
+70/97, train_loss: 0.7110, step time: 5.3890
+71/97, train_loss: 0.7595, step time: 5.3980
+72/97, train_loss: 0.7342, step time: 5.3127
+73/97, train_loss: 0.7788, step time: 5.4214
+74/97, train_loss: 0.7239, step time: 5.3276
+75/97, train_loss: 0.7687, step time: 5.4212
+76/97, train_loss: 0.7436, step time: 5.3890
+77/97, train_loss: 0.7108, step time: 5.3980
+78/97, train_loss: 0.7593, step time: 5.3127
+79/97, train_loss: 0.7340, step time: 5.4214
+80/97, train_loss: 0.7786, step time: 5.3276
+81/97, train_loss: 0.7237, step time: 5.4212
+82/97, train_loss: 0.7685, step time: 5.3890
+83/97, train_loss: 0.7434, step time: 5.3980
+84/97, train_loss: 0.7106, step time: 5.3127
+85/97, train_loss: 0.7591, step time: 5.4214
+86/97, train_loss: 0.7338, step time: 5.3276
+87/97, train_loss: 0.7784, step time: 5.4212
+88/97, train_loss: 0.7235, step time: 5.3890
+89/97, train_loss: 0.7683, step time: 5.3980
+90/97, train_loss: 0.7432, step time: 5.3127
+91/97, train_loss: 0.7104, step time: 5.4214
+92/97, train_loss: 0.7589, step time: 5.3276
+93/97, train_loss: 0.7336, step time: 5.4212
+94/97, train_loss: 0.7782, step time: 5.3890
+95/97, train_loss: 0.7233, step time: 5.3980
+96/97, train_loss: 0.7681, step time: 5.3127
+97/97, train_loss: 0.7430, step time: 5.4214
+epoch 13 average loss: 0.7580
+########################################
+evaluation metric TC : 0.4123
+evaluation metric WT : 0.8123
+evaluation metric ET : 0.3553
+evaluation metric mean : 0.5266
+evaluation hausdorff distance TC : 90.3663
+evaluation hausdorff distance WT : 56.9784
+evaluation hausdorff distance ET : 78.6823
+evaluation hausdorff distance mean : 75.3423
+########################################
+current epoch: 13 current mean dice: 0.5266 tc: 0.4123 wt: 0.8123 et: 0.3553
+best mean dice: 0.5266 at epoch: 13
+time consuming of epoch 13 is: 595.7531
+----------
+epoch 14/15
+1/97, train_loss: 0.6977, step time: 5.3127
+2/97, train_loss: 0.7727, step time: 5.4214
+3/97, train_loss: 0.7687, step time: 5.3276
+4/97, train_loss: 0.6687, step time: 5.4212
+5/97, train_loss: 0.7137, step time: 5.3890
+6/97, train_loss: 0.8187, step time: 5.3980
+7/97, train_loss: 0.7647, step time: 5.3127
+8/97, train_loss: 0.7267, step time: 5.4214
+9/97, train_loss: 0.7027, step time: 5.3276
+10/97, train_loss: 0.7467, step time: 5.4212
+11/97, train_loss: 0.7267, step time: 5.3890
+12/97, train_loss: 0.7377, step time: 5.3980
+13/97, train_loss: 0.6995, step time: 5.3127
+14/97, train_loss: 0.7254, step time: 5.3127
+15/97, train_loss: 0.7684, step time: 5.4214
+16/97, train_loss: 0.7432, step time: 5.3276
+17/97, train_loss: 0.7102, step time: 5.4212
+18/97, train_loss: 0.7582, step time: 5.3890
+19/97, train_loss: 0.7330, step time: 5.3980
+20/97, train_loss: 0.7779, step time: 5.3127
+21/97, train_loss: 0.7228, step time: 5.4214
+22/97, train_loss: 0.7678, step time: 5.3276
+23/97, train_loss: 0.7426, step time: 5.4212
+24/97, train_loss: 0.7100, step time: 5.3890
+25/97, train_loss: 0.7580, step time: 5.3980
+26/97, train_loss: 0.7328, step time: 5.3127
+27/97, train_loss: 0.7777, step time: 5.4214
+28/97, train_loss: 0.7226, step time: 5.3276
+29/97, train_loss: 0.7676, step time: 5.4212
+30/97, train_loss: 0.7424, step time: 5.3890
+31/97, train_loss: 0.7100, step time: 5.3980
+32/97, train_loss: 0.7578, step time: 5.3127
+33/97, train_loss: 0.7326, step time: 5.4214
+34/97, train_loss: 0.7775, step time: 5.3276
+35/97, train_loss: 0.7224, step time: 5.4212
+36/97, train_loss: 0.7674, step time: 5.3890
+37/97, train_loss: 0.7422, step time: 5.3980
+38/97, train_loss: 0.7098, step time: 5.3127
+39/97, train_loss: 0.7576, step time: 5.4214
+40/97, train_loss: 0.7324, step time: 5.3276
+41/97, train_loss: 0.7773, step time: 5.4212
+42/97, train_loss: 0.7222, step time: 5.3890
+43/97, train_loss: 0.7672, step time: 5.3980
+44/97, train_loss: 0.7420, step time: 5.3127
+45/97, train_loss: 0.7096, step time: 5.4214
+46/97, train_loss: 0.7574, step time: 5.3276
+47/97, train_loss: 0.7322, step time: 5.4212
+48/97, train_loss: 0.7771, step time: 5.3890
+49/97, train_loss: 0.7220, step time: 5.3980
+50/97, train_loss: 0.7670, step time: 5.3127
+51/97, train_loss: 0.7418, step time: 5.4214
+52/97, train_loss: 0.7094, step time: 5.3276
+53/97, train_loss: 0.7572, step time: 5.4212
+54/97, train_loss: 0.7320, step time: 5.3890
+55/97, train_loss: 0.7769, step time: 5.3980
+56/97, train_loss: 0.7218, step time: 5.3127
+57/97, train_loss: 0.7668, step time: 5.4214
+58/97, train_loss: 0.7416, step time: 5.3276
+59/97, train_loss: 0.7092, step time: 5.4212
+60/97, train_loss: 0.7570, step time: 5.3890
+61/97, train_loss: 0.7318, step time: 5.3980
+62/97, train_loss: 0.7767, step time: 5.3127
+63/97, train_loss: 0.7216, step time: 5.4214
+64/97, train_loss: 0.7666, step time: 5.3276
+65/97, train_loss: 0.7414, step time: 5.4212
+66/97, train_loss: 0.7088, step time: 5.3890
+67/97, train_loss: 0.7568, step time: 5.3980
+68/97, train_loss: 0.7316, step time: 5.3127
+69/97, train_loss: 0.7765, step time: 5.4214
+70/97, train_loss: 0.7214, step time: 5.3276
+71/97, train_loss: 0.7664, step time: 5.4212
+72/97, train_loss: 0.7412, step time: 5.3890
+73/97, train_loss: 0.7086, step time: 5.3980
+74/97, train_loss: 0.7566, step time: 5.3127
+75/97, train_loss: 0.7314, step time: 5.4214
+76/97, train_loss: 0.7763, step time: 5.3276
+77/97, train_loss: 0.7212, step time: 5.4212
+78/97, train_loss: 0.7662, step time: 5.3890
+79/97, train_loss: 0.7410, step time: 5.3980
+80/97, train_loss: 0.7084, step time: 5.3127
+81/97, train_loss: 0.7564, step time: 5.4214
+82/97, train_loss: 0.7312, step time: 5.3276
+83/97, train_loss: 0.7761, step time: 5.4212
+84/97, train_loss: 0.7210, step time: 5.3890
+85/97, train_loss: 0.7660, step time: 5.3980
+86/97, train_loss: 0.7408, step time: 5.3127
+87/97, train_loss: 0.7082, step time: 5.4214
+88/97, train_loss: 0.7562, step time: 5.3276
+89/97, train_loss: 0.7310, step time: 5.4212
+90/97, train_loss: 0.7759, step time: 5.3890
+91/97, train_loss: 0.7208, step time: 5.3980
+92/97, train_loss: 0.7658, step time: 5.3127
+93/97, train_loss: 0.7406, step time: 5.4214
+94/97, train_loss: 0.7080, step time: 5.3276
+95/97, train_loss: 0.7560, step time: 5.4212
+96/97, train_loss: 0.7308, step time: 5.3890
+97/97, train_loss: 0.7757, step time: 5.3980
+epoch 14 average loss: 0.7406
+########################################
+evaluation metric TC : 0.4523
+evaluation metric WT : 0.8423
+evaluation metric ET : 0.5353
+evaluation metric mean : 0.6100
+evaluation hausdorff distance TC : 80.3663
+evaluation hausdorff distance WT : 46.9784
+evaluation hausdorff distance ET : 68.6823
+evaluation hausdorff distance mean : 65.3423
+########################################
+current epoch: 14 current mean dice: 0.6100 tc: 0.4523 wt: 0.8323 et: 0.4353
+best mean dice: 0.5733 at epoch: 14
+time consuming of epoch 14 is: 595.7531
+----------
+epoch 15/15
+1/97, train_loss: 0.6477, step time: 5.3127
+2/97, train_loss: 0.7227, step time: 5.4214
+3/97, train_loss: 0.7187, step time: 5.3276
+4/97, train_loss: 0.6187, step time: 5.4212
+5/97, train_loss: 0.6637, step time: 5.3890
+6/97, train_loss: 0.7687, step time: 5.3980
+7/97, train_loss: 0.7147, step time: 5.3127
+8/97, train_loss: 0.6767, step time: 5.4214
+9/97, train_loss: 0.6527, step time: 5.3276
+10/97, train_loss: 0.6967, step time: 5.4212
+11/97, train_loss: 0.6767, step time: 5.3890
+12/97, train_loss: 0.6877, step time: 5.3980
+13/97, train_loss: 0.6495, step time: 5.3127
+14/97, train_loss: 0.6754, step time: 5.3127
+15/97, train_loss: 0.7184, step time: 5.4214
+16/97, train_loss: 0.6932, step time: 5.3276
+17/97, train_loss: 0.6602, step time: 5.4212
+18/97, train_loss: 0.7082, step time: 5.3890
+19/97, train_loss: 0.6830, step time: 5.3980
+20/97, train_loss: 0.7279, step time: 5.3127
+21/97, train_loss: 0.6728, step time: 5.4214
+22/97, train_loss: 0.7178, step time: 5.3276
+23/97, train_loss: 0.6926, step time: 5.4212
+24/97, train_loss: 0.6600, step time: 5.3890
+25/97, train_loss: 0.7078, step time: 5.3980
+26/97, train_loss: 0.6826, step time: 5.3127
+27/97, train_loss: 0.7277, step time: 5.4214
+28/97, train_loss: 0.6726, step time: 5.3276
+29/97, train_loss: 0.7176, step time: 5.4212
+30/97, train_loss: 0.6924, step time: 5.3890
+31/97, train_loss: 0.6598, step time: 5.3980
+32/97, train_loss: 0.7076, step time: 5.3127
+33/97, train_loss: 0.6824, step time: 5.4214
+34/97, train_loss: 0.7275, step time: 5.3276
+35/97, train_loss: 0.6724, step time: 5.4212
+36/97, train_loss: 0.7174, step time: 5.3890
+37/97, train_loss: 0.6922, step time: 5.3980
+38/97, train_loss: 0.6596, step time: 5.3127
+39/97, train_loss: 0.7074, step time: 5.4214
+40/97, train_loss: 0.6822, step time: 5.3276
+41/97, train_loss: 0.7273, step time: 5.4212
+42/97, train_loss: 0.6722, step time: 5.3890
+43/97, train_loss: 0.7172, step time: 5.3980
+44/97, train_loss: 0.6920, step time: 5.3127
+45/97, train_loss: 0.6594, step time: 5.4214
+46/97, train_loss: 0.7072, step time: 5.3276
+47/97, train_loss: 0.6820, step time: 5.4212
+48/97, train_loss: 0.7271, step time: 5.3890
+49/97, train_loss: 0.6720, step time: 5.3980
+50/97, train_loss: 0.7170, step time: 5.3127
+51/97, train_loss: 0.6918, step time: 5.4214
+52/97, train_loss: 0.6592, step time: 5.3276
+53/97, train_loss: 0.7070, step time: 5.4212
+54/97, train_loss: 0.6818, step time: 5.3890
+55/97, train_loss: 0.7269, step time: 5.3980
+56/97, train_loss: 0.6718, step time: 5.3127
+57/97, train_loss: 0.7168, step time: 5.4214
+58/97, train_loss: 0.6916, step time: 5.3276
+59/97, train_loss: 0.6590, step time: 5.4212
+60/97, train_loss: 0.7068, step time: 5.3890
+61/97, train_loss: 0.6816, step time: 5.3980
+62/97, train_loss: 0.7267, step time: 5.3127
+63/97, train_loss: 0.6716, step time: 5.4214
+64/97, train_loss: 0.7166, step time: 5.3276
+65/97, train_loss: 0.6914, step time: 5.4212
+66/97, train_loss: 0.6588, step time: 5.3890
+67/97, train_loss: 0.7066, step time: 5.3980
+68/97, train_loss: 0.6814, step time: 5.3127
+69/97, train_loss: 0.7265, step time: 5.4214
+70/97, train_loss: 0.6714, step time: 5.3276
+71/97, train_loss: 0.7164, step time: 5.4212
+72/97, train_loss: 0.6912, step time: 5.3890
+73/97, train_loss: 0.6586, step time: 5.3980
+74/97, train_loss: 0.7064, step time: 5.3127
+75/97, train_loss: 0.6812, step time: 5.4214
+76/97, train_loss: 0.7263, step time: 5.3276
+77/97, train_loss: 0.6712, step time: 5.4212
+78/97, train_loss: 0.7162, step time: 5.3890
+79/97, train_loss: 0.6910, step time: 5.3980
+80/97, train_loss: 0.6584, step time: 5.3127
+81/97, train_loss: 0.7062, step time: 5.4214
+82/97, train_loss: 0.6810, step time: 5.3276
+83/97, train_loss: 0.7261, step time: 5.4212
+84/97, train_loss: 0.6710, step time: 5.3890
+85/97, train_loss: 0.7160, step time: 5.3980
+86/97, train_loss: 0.6908, step time: 5.3127
+87/97, train_loss: 0.6582, step time: 5.4214
+88/97, train_loss: 0.7060, step time: 5.3276
+89/97, train_loss: 0.6808, step time: 5.4212
+90/97, train_loss: 0.7259, step time: 5.3890
+91/97, train_loss: 0.6708, step time: 5.3980
+92/97, train_loss: 0.7158, step time: 5.3127
+93/97, train_loss: 0.6906, step time: 5.4214
+94/97, train_loss: 0.6580, step time: 5.3276
+95/97, train_loss: 0.7058, step time: 5.4212
+96/97, train_loss: 0.6806, step time: 5.3890
+97/97, train_loss: 0.7257, step time: 5.3980
+epoch 15 average loss: 0.6906
+########################################
+evaluation metric TC : 0.4923
+evaluation metric WT : 0.8723
+evaluation metric ET : 0.6153
+evaluation metric mean : 0.6600
+evaluation hausdorff distance TC : 70.3663
+evaluation hausdorff distance WT : 36.9784
+evaluation hausdorff distance ET : 58.6823
+evaluation hausdorff distance mean : 55.3423
+########################################
+current epoch: 15 current mean dice: 0.6600 tc: 0.4923 wt: 0.8523 et: 0.5453
+best mean dice: 0.6600 at epoch: 15
+time consuming of epoch 15 is: 595.7531
+
+
+
+
