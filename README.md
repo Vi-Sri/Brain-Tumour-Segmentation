@@ -60,3 +60,11 @@ sbatch sbatch_5fold.sh # 5 fold cross validation training
 ```
 
 #### The outputs are recorded in ```outputs``` folder running slurm for different runs.
+
+## Features
+These are recorded :
+- Hausdorff distance 
+- Dice Metric
+- Distributed training
+- Slurm support
+- Dataset caching support from ```monai```
